@@ -1,15 +1,11 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { createGlobalStyle } from 'styled-components';
 import reset from 'styled-reset';
 import App from './App';
-import { Provider } from 'react-redux';
-import { applyMiddleware, createStore } from 'redux';
-import promiseMiddlerware from 'redux-promise';
-import reduxThunk from 'redux-thunk';
 import { createRoot } from 'react-dom/client';
-import reducer from './reducers/user_reducer';
+import { Provider } from 'react-redux';
+import store from './redux/store';
 
 const GlobalStyle = createGlobalStyle`
     ${reset}
@@ -72,28 +68,13 @@ const GlobalStyle = createGlobalStyle`
     }
 `;
 
-const createStoreWidthMiddleware = applyMiddleware(
-    promiseMiddlerware,
-    reduxThunk
-)(createStore);
-
 const container = document.getElementById('root');
 const root = createRoot(container);
 root.render(
-    <React.StrictMode>
-        <Provider
-            store={createStoreWidthMiddleware(
-                reducer,
-                //
-                //개발자 도구를 사용하기 위한 설정
-                window.__REDUX_DEVTOOLS_EXTENSION__ &&
-                    window.__REDUX_DEVTOOLS_EXTENSION__()
-            )}
-        >
-            <GlobalStyle />
-            <BrowserRouter>
-                <App />
-            </BrowserRouter>
-        </Provider>
-    </React.StrictMode>
+    <Provider store={store}>
+        <GlobalStyle />
+        <BrowserRouter>
+            <App />
+        </BrowserRouter>
+    </Provider>
 );

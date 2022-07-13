@@ -3,8 +3,6 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import { LBtn } from '../components/common/Buttons';
 import { EmailInput, PassWordInput, TextLabel } from '../components/common/TextAciveInput'
-import { useDispatch } from 'react-redux'
-import { registerUser } from '../actions/user_action';
 import { withRouter } from 'react-router-dom';
 
 const LoginMain = styled.section`
@@ -40,7 +38,6 @@ const JoinPassWordInput = styled(PassWordInput).attrs({
 function JoinMembershipPage(props) {
     const [Email, setEmail] = useState('');
     const [Password, setPassword] = useState('');
-    const dispatch = useDispatch();
 
     const onEmailHandler = (event) => {
         setEmail(event.currentTarget.value);
@@ -52,15 +49,6 @@ function JoinMembershipPage(props) {
 
     const onSubmitHandler = (event) => {
         event.preventDefault();
-        let body = {
-            email: Email,
-            password: Password,
-        };
-
-        dispatch(registerUser(body)).then((res) => {
-            alert('가입이 정상적으로 되었습니다.');
-            props.history.push('/login');
-        });
     }
 
     return (

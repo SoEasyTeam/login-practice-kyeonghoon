@@ -5,7 +5,8 @@ import { LBtn } from '../components/common/Buttons';
 import { EmailInput, PassWordInput, TextLabel } from '../components/common/TextAciveInput'
 import { useState } from 'react';
 import {useDispatch} from 'react-redux';
-import { loginUser } from '../actions/user_action';
+import { authenticateAction } from '../redux/actions/authenticateAction';
+import { useHistory } from "react-router-dom";
 
 const LoginMain = styled.section`
     width: 100vw;
@@ -36,20 +37,17 @@ const JoinEmailLink = styled(Link)`
     line-height: 15px;
 `
 
-function LoginPage() {
-    const [Email, setEmail] = useState('');
-    const [Password, setPassword] = useState('');
-
-    const onEmailHandler = (event) => {
-        setEmail(event.currentTarget.value);
-    }
-
-    const onPasswordHandler = (event) => {
-        setPassword(event.currentTarget.value);
-    }
+function LoginPage({ setAuthenticate }) {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const dispatch = useDispatch();
+    const history = useHistory();
 
     const onSubmitHandler = (event) => {
         event.preventDefault();
+        console.log("login user function issue");
+        dispatch(authenticateAction.login(email, password));
+        history.push("/home");
     }
 
     return (
@@ -58,9 +56,9 @@ function LoginPage() {
             <h2 className='loginTitle'>로그인</h2>
             <form className='loginForm' onSubmit={onSubmitHandler}>
                 <TextLabel>이메일</TextLabel>
-                <EmailInput value={Email} onChange = {onEmailHandler} />
+                <EmailInput value={email} onChange = {(event) => setEmail(event.target.value)} />
                 <TextLabel>비밀번호</TextLabel>
-                <PassWordInput value={Password} onChange = {onPasswordHandler} />
+                <PassWordInput value={password} onChange = {(event) => setPassword(event.target.value)} />
                 <div className='loginBtnWrap'>
                     <LoginBtn>로그인</LoginBtn>
                     <JoinEmailLink to='/join'>이메일로 회원가입</JoinEmailLink>
