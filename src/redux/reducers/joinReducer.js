@@ -1,9 +1,9 @@
 let initialState = {
     email: '',
     password: '',
-    isName: '',
-    isId: '',
-    isIntroduce: '',
+    username: '',
+    accountname: '',
+    intro: '',
 };
 
 function joinReducer(state = initialState, action) {
@@ -15,9 +15,9 @@ function joinReducer(state = initialState, action) {
                 ...state,
                 email: payload.email,
                 password: payload.password,
-                isName: payload.isName,
-                isId: payload.isId,
-                isIntroduce: payload.isIntroduce,
+                username: payload.username,
+                accountname: payload.accountname,
+                intro: payload.intro,
             };
         default:
             return { ...state };

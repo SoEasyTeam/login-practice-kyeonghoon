@@ -8,12 +8,33 @@ function join(email, password) {
     };
 }
 
-function joinfinal(email, password, isName, isId, isIntroduce) {
+function joinfinal(email, password, username, accountname, intro) {
     console.log('join final success action');
-    return (dispatch, getState) => {
+    return async (dispatch, getState) => {
+        let url = 'https://mandarin.api.weniv.co.kr';
+        const reqPath = '/user';
+        try {
+            let res = await fetch(url + reqPath, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    user: {
+                        username: username,
+                        email: email,
+                        password: password,
+                        accountname: accountname,
+                        intro: intro,
+                    },
+                }),
+            });
+            const resJson = await res.json();
+            console.log(resJson);
+        } catch (error) {}
         dispatch({
             type: 'JOIN_SUCCESS',
-            payload: { email, password, isName, isId, isIntroduce },
+            payload: { email, password, username, accountname, intro },
         });
     };
 }

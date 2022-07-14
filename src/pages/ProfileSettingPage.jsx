@@ -79,9 +79,9 @@ const SignUpBtn = styled(LBtn)`
 
 function ProfileSettingPage() {
     const [profileImg, setProfileImg] = useState(JoinProfileImg);
-    const [isName, setIsName] = useState('');
-    const [isId, setIsId] = useState('');
-    const [isIntroduce, setIsIntroduce] = useState('');
+    const [username, setUsername] = useState('');
+    const [accountname, setAccountname] = useState('');
+    const [intro, setIntro] = useState('');
     const [isActive, setIsActive] = useState('');
     const history = useHistory();
     const email = useSelector(state => state.join.email);
@@ -93,7 +93,7 @@ function ProfileSettingPage() {
     };
 
     const signUpActive = () => {
-        return (isName.length > 1 && isName.length < 11)
+        return (username.length > 1 && username.length < 11)
         ? setIsActive(false)
         : setIsActive(true);
     };
@@ -104,7 +104,7 @@ function ProfileSettingPage() {
         history.push('/login');
         // console.log(email);
         // console.log(password);
-        dispatch(joinAction.joinfinal(email, password, isName, isId, isIntroduce));
+        dispatch(joinAction.joinfinal(email, password, username, accountname, intro));
     }
 
     return (
@@ -121,15 +121,15 @@ function ProfileSettingPage() {
             <ProfileImgInput onChange={onChangeProfileImg} id='profileImg' type='file' accept='image/*' />
             <div className='input-cont'>
                 <TextLabel>사용자 이름</TextLabel>
-                <ProfileNameInput value={isName} onChange={(event) => setIsName(event.target.value)} onKeyUp = {signUpActive} />
+                <ProfileNameInput value={username} onChange={(event) => setUsername(event.target.value)} onKeyUp = {signUpActive} />
             </div>
             <div className='input-cont'>
                 <TextLabel>계정 ID</TextLabel>
-                <ProfileId value={isId} onChange={(event) => setIsId(event.target.value)} />
+                <ProfileId value={accountname} onChange={(event) => setAccountname(event.target.value)} />
             </div>
             <div className='input-cont'>
                 <TextLabel>소개</TextLabel>
-                <ProfileIntroduce value={isIntroduce} onChange={(event) => setIsIntroduce(event.target.value)} />
+                <ProfileIntroduce value={intro} onChange={(event) => setIntro(event.target.value)} />
             </div>
             <SignUpBtn disabled={isActive}>감귤마켓 시작하기</SignUpBtn>
         </ProfileSettingForm>
