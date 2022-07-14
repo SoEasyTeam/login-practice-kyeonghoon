@@ -3,7 +3,7 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import { LBtn } from '../components/common/Buttons';
 import { EmailInput, PassWordInput, TextLabel } from '../components/common/TextAciveInput'
-import { withRouter } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 const LoginMain = styled.section`
     width: 100vw;
@@ -36,19 +36,26 @@ const JoinPassWordInput = styled(PassWordInput).attrs({
 })``
 
 function JoinMembershipPage(props) {
-    const [Email, setEmail] = useState('');
-    const [Password, setPassword] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [isActive, setIsActive] = useState(true);
+    const history = useHistory();
 
-    const onEmailHandler = (event) => {
-        setEmail(event.currentTarget.value);
-    }
+    //이메일 주소 유효성 검사
+    const checkEmail =
+    /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
 
-    const onPasswordHandler = (event) => {
-        setPassword(event.currentTarget.value);
-    }
+    //다음버튼 활성화 검사
+    const nextSignUpActive = () => {
+        return checkEmail.test(email)&&password.length > 5
+        ? setIsActive(false)
+        : setIsActive(true);
+    };
 
     const onSubmitHandler = (event) => {
         event.preventDefault();
+        console.log('버튼 클릭')
+        history.push('/profilesetting');
     }
 
     return (
@@ -57,15 +64,15 @@ function JoinMembershipPage(props) {
             <h2 className='loginTitle'>이메일로 회원가입</h2>
             <form className='loginForm' onSubmit={ onSubmitHandler }>
                 <TextLabel>이메일</TextLabel>
-                <JoinEmailInput value={Email} onChange={onEmailHandler}/>
+                <JoinEmailInput value={email} onChange={(event) => setEmail(event.currentTarget.value)}  onKeyUp={nextSignUpActive}/>
                 <TextLabel>비밀번호</TextLabel>
-                <JoinPassWordInput value={Password} onChange={onPasswordHandler}/>
+                <JoinPassWordInput value={password} onChange={(event) => setPassword(event.currentTarget.value)}  onKeyUp={nextSignUpActive}/>
                 <div className='nextBtnWrap'>
-                    <NextBtn>다음</NextBtn>
+                    <NextBtn disabled={isActive}>다음</NextBtn>
                 </div>
             </form>
         </LoginMain>
     )
 }
 
-export default withRouter(JoinMembershipPage);
+export default JoinMembershipPage;

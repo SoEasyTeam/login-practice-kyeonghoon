@@ -19,13 +19,19 @@ function login(email, password) {
             });
             const resJson = await res.json();
             console.log(resJson);
+            if (
+                resJson.message === '이메일 또는 비밀번호가 일치하지 않습니다.'
+            ) {
+                console.log('action dispatch 중지');
+            } else {
+                dispatch({
+                    type: 'LOGIN_SUCCESS',
+                    payload: { email, password },
+                });
+            }
         } catch (err) {
             console.log(err);
         }
-        dispatch({
-            type: 'LOGIN_SUCCESS',
-            payload: { email, password },
-        });
     };
 }
 

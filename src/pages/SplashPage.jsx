@@ -19,4 +19,4 @@ function SplashPage(props) {
     )
 }
 
-export default withRouter(SplashPage);
+export default SplashPage;

@@ -4,6 +4,7 @@ import HomePage from './pages/HomePage';
 import JoinMembershipPage from './pages/JoinMembershipPage';
 import LoginPage from './pages/LoginPage';
 import SplashPage from './pages/SplashPage';
+import ProfileSetting from './pages/ProfileSettingPage';
 
 function App() {
     let [authenticate, setAuthenticate] = useState(false);
@@ -23,6 +24,10 @@ function App() {
                 )}
             />
             <Route path='/home' component={() => <HomePage />} />
+            <Route
+                path='/profilesetting'
+                component={() => <ProfileSetting />}
+            />
         </Switch>
     );
 }
