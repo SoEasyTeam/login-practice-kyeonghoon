@@ -10,6 +10,9 @@ import {
     ProfileNameInput,
     TextLabel,
 } from '../components/common/TextAciveInput';
+import { useDispatch, useSelector } from 'react-redux'
+import { joinAction } from '../redux/actions/joinAction';
+
 
 const ProfileSettingForm = styled.form`
     width: 100vw;
@@ -81,6 +84,9 @@ function ProfileSettingPage() {
     const [isIntroduce, setIsIntroduce] = useState('');
     const [isActive, setIsActive] = useState('');
     const history = useHistory();
+    const email = useSelector(state => state.join.email);
+    const password = useSelector(state => state.join.password);
+    const dispatch = useDispatch();
 
     const onChangeProfileImg = (event) => {
         setProfileImg(URL.createObjectURL(event.target.files[0]));
@@ -96,7 +102,9 @@ function ProfileSettingPage() {
         event.preventDefault();
         console.log('login user function issue');
         history.push('/login');
-        // dispatch(authenticateAction.login(email, password));
+        // console.log(email);
+        // console.log(password);
+        dispatch(joinAction.joinfinal(email, password, isName, isId, isIntroduce));
     }
 
     return (

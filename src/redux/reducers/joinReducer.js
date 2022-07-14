@@ -1,30 +1,27 @@
 let initialState = {
     email: '',
     password: '',
-    authenticate: false,
+    isName: '',
+    isId: '',
+    isIntroduce: '',
 };
 
-function authenticateReducer(state = initialState, action) {
+function joinReducer(state = initialState, action) {
     let { type, payload } = action;
     switch (type) {
-        case 'LOGIN_SUCCESS':
-            console.log('login success reducer');
-            return {
-                ...state,
-                email: payload.email,
-                password: payload.password,
-                authenticate: true,
-            };
         case 'JOIN_EMAIL_PASSWORD_SUCCESS':
             console.log('join email pw success reducer');
             return {
                 ...state,
                 email: payload.email,
                 password: payload.password,
+                isName: payload.isName,
+                isId: payload.isId,
+                isIntroduce: payload.isIntroduce,
             };
         default:
             return { ...state };
     }
 }
 
-export default authenticateReducer;
+export default joinReducer;

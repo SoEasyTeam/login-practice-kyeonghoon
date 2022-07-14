@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import { LBtn } from '../components/common/Buttons';
 import { EmailInput, PassWordInput, TextLabel } from '../components/common/TextAciveInput'
 import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { joinAction } from '../redux/actions/joinAction';
 
 const LoginMain = styled.section`
     width: 100vw;
@@ -40,6 +42,7 @@ function JoinMembershipPage(props) {
     const [password, setPassword] = useState('');
     const [isActive, setIsActive] = useState(true);
     const history = useHistory();
+    const dispatch = useDispatch();
 
     //이메일 주소 유효성 검사
     const checkEmail =
@@ -56,6 +59,7 @@ function JoinMembershipPage(props) {
         event.preventDefault();
         console.log('버튼 클릭')
         history.push('/profilesetting');
+        dispatch(joinAction.join(email,password));
     }
 
     return (
